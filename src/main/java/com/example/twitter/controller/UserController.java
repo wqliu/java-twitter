@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,9 +22,9 @@ public class UserController {
     JdbcTemplate jdbcTemplate;    	
     
 	@PostMapping(path="/addUser")
-	public @ResponseBody boolean addUser(@RequestBody Map<String,String> user) {
+	public @ResponseBody boolean addUser(@RequestBody String user) {
 		try {
-		    jdbcTemplate.update("insert into user(username,sex) values (?,?)",user.get("username"),user.get("sex"));
+		    jdbcTemplate.update("insert into user(username) values (?)",user);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -52,9 +50,9 @@ public class UserController {
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String,Object> map = mapper.readValue(json, Map.class);
 			String username = map.get("username").toString();
-			String sex = map.get("sex").toString();
+			//String sex = map.get("sex").toString();
 			jdbcTemplate.update("update user set username = ? where id = ?",username,Integer.parseInt(id));
-			jdbcTemplate.update("update user set sex = ? where id = ?",sex,Integer.parseInt(id));
+			//jdbcTemplate.update("update user set sex = ? where id = ?",sex,Integer.parseInt(id));
 			return true;
 		}
 		catch(Exception e){

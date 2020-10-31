@@ -3,15 +3,15 @@ import java.util.Date;
 import java.util.Calendar;
 
 public class Twitter {
-
-    private Integer id;
-    //private User user;
-    public String location;
+    public User user;
+    public String text;
     public Date date;
+    public int likes;
     
-    public Twitter(User u) {
-    	location = "";
+    public Twitter(User u, String t) {
+    	user = u;
+    	text = t;
     	date = Calendar.getInstance().getTime();
-    	//user = u;
+    	likes = 0;
     }
 }
