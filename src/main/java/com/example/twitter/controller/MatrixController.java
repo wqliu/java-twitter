@@ -13,16 +13,16 @@ public class MatrixController {
 		mu = new matrixUtility(4);
 	}
 	
+	/*
 	@GetMapping(path="/matrix-multiplication")
 	public @ResponseBody int[][] MatrixMultiplication() throws Exception{
-		int[][] a = {{1,2},{2,1}};
-		int[][] b = {{2,1},{2,1}};
 		try {
-		    int[][] c = mu.normalMatrixMutiplication(a, b);
+		    int[][] c = mu.MatrixMutiplication(a, b);
 		    return c;
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
  	}
+ 	*/
 }
