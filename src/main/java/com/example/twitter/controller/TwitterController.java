@@ -1,4 +1,6 @@
 package com.example.twitter.controller;
+
+import com.example.twitter.models.Twitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,9 @@ import java.util.Map;
 public class TwitterController {
 	@Autowired
     JdbcTemplate jdbcTemplate; 
-	
+	/*
 	@PostMapping(path="/postTwitter")
-	public @ResponseBody Boolean postTwitter(@RequestBody Map<String, Object> payload) {
+	public @ResponseBody Boolean postTwitter(@RequestBody Twitter payload) {
 		try {
 			String username = payload.get("username").toString();
 			int id = jdbcTemplate.queryForObject("select id from user where username=?",new Object[]{username}, int.class);
@@ -33,5 +35,26 @@ public class TwitterController {
 		return true;
 	}
 	
+	@PostMapping(path="/deleteTwitter/{id}")
+	public @ResponseBody Boolean deleteTwitter(@PathVariable(value = "id") int id) {
+		try {
+			jdbcTemplate.update("delete from twitter where id = ?",id);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	
+	@PostMapping(path="/likeTwitter/{id}")
+	public @ResponseBody Boolean likeTwitter(@PathVariable(value = "id") int id) {
+		try {
+			jdbcTemplate.update("update twitter set likes = likes+1 where id = ?",id);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	*/
 }

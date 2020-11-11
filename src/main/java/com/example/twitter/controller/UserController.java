@@ -1,69 +1,57 @@
 package com.example.twitter.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.FlushMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
-
+import com.example.twitter.dao.UserDao;
+import com.example.twitter.models.User;
+import org.springframework.context.support.ClassPathXmlApplicationContext;  
 
 @Controller
 @RequestMapping(path="/java-twitter")
 public class UserController {
-	@Autowired
-    JdbcTemplate jdbcTemplate;    	
-    
+    //public JdbcTemplate jdbcTemplate;    	
+	//@Autowired
+    public UserDao userDao;
+    public UserController() {
+    	ClassPathXmlApplicationContext  r = new ClassPathXmlApplicationContext("applicationContext.xml");    
+        //userDao = new UserDao();
+    	userDao=(UserDao)r.getBean(UserDao.class);  
+        //System.out.println(userDao.template.getSessionFactory().getCurrentSession().getFlushMode());
+    }
+	
+    @Transactional
 	@PostMapping(path="/addUser")
-	public @ResponseBody boolean addUser(@RequestBody String user) {
-		try {
-		    jdbcTemplate.update("insert into user(username) values (?)",user);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+	public @ResponseBody boolean addUser(@RequestBody User user) {
+		userDao.saveUser(user);
 		return true;
 	}
 	
 	@GetMapping(path="/getUserById/{id}")
-	public @ResponseBody String getUserById(@PathVariable(value="id") String id){
-		try { 
-			return jdbcTemplate.queryForObject("select username from user where id=?",new Object[] {Integer.parseInt(id)},String.class);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return "";
-		}
+	public @ResponseBody User getUserById(@PathVariable(value="id") int id){
+		return userDao.getUserById(id);
 	}
 	
-	@PostMapping(path="/updateUserById/{id}")
-	public @ResponseBody boolean updateUserById(@PathVariable(value="id") String id,@RequestBody String json) {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			Map<String,Object> map = mapper.readValue(json, Map.class);
-			String username = map.get("username").toString();
-			//String sex = map.get("sex").toString();
-			jdbcTemplate.update("update user set username = ? where id = ?",username,Integer.parseInt(id));
-			//jdbcTemplate.update("update user set sex = ? where id = ?",sex,Integer.parseInt(id));
-			return true;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
+	@PostMapping(path="/updateUser")
+	public @ResponseBody boolean updateUserById(User u) {
+		userDao.updateUser(u);
+		return true;
 	}
 	
-	@DeleteMapping(path="deleteUserById/{id}")
-	public @ResponseBody boolean deleteUserById(@PathVariable(value="id") String id) {
-		try {
-			jdbcTemplate.update("delete from user where id = ?",Integer.parseInt(id));
-			return true;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
+	@DeleteMapping(path="/deleteUser")
+	public @ResponseBody boolean deleteUserById(User u) {
+	    userDao.deleteUser(u);
+	    return true;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		UserController a = new UserController();
+		//a.userDao.save(new User("hello"));
 	}
 }
 
