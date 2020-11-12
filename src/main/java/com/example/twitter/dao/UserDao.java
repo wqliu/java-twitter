@@ -4,36 +4,50 @@ import com.example.twitter.models.User;
 import org.springframework.orm.hibernate5.HibernateTemplate; 
 import java.util.List;
 import java.util.ArrayList;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
-@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+@Repository
+@Transactional
 public class UserDao {
-	public HibernateTemplate template;  
+	//public HibernateTemplate template;
+	@Autowired
+    private SessionFactory _sessionFactory;
 	public void setTemplate(HibernateTemplate template) {  
-	    this.template = template;  
-	}  
-	  
+	    //.template = template;  
+	}
+	
+	private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+	
 	public void saveUser(User u){  
-		//System.out.println("11111111");
-	    template.save(u);  
+		System.out.println(u.id);
+	    //template.persist(u);
+		getSession().save(u);
 	    //System.out.println("22222222");
 	}  
 	  
 	public void updateUser(User u){  
-	    template.update(u);  
+	    //template.update(u);  
 	}  
 	  
 	public void deleteUser(User u){  
-	    template.delete(u);  
+	    //template.delete(u);  
 	}  
 	 
+	/*
 	public User getUserById(int id){  
-	    User u=(User)template.get(User.class,id);  
-	    return u;  
-	}  
+	    //User u=(User)template.get(User.class,id);  
+	    //return u;  
+	} 
+	*/ 
 	
 	public List<User> getUsers(){  
 	    List<User> list=new ArrayList<User>();  
-	    list=template.loadAll(User.class);  
+	    //list=template.loadAll(User.class);  
 	    return list;  
 	}  
 }
