@@ -24,26 +24,26 @@ public class UserDao {
     }
 	
 	public void saveUser(User u){  
-		System.out.println(u.id);
+		//System.out.println(u.id);
 	    //template.persist(u);
 		getSession().save(u);
 	    //System.out.println("22222222");
 	}  
 	  
+	public User getUserById(int id) {
+		return getSession().get(User.class, id);
+	}
+	
 	public void updateUser(User u){  
-	    //template.update(u);  
+	    getSession().update(u);  
 	}  
 	  
 	public void deleteUser(User u){  
-	    //template.delete(u);  
+		User u2 = getSession().get(User.class, u.id);
+		System.out.println(u2.username);
+	    getSession().delete(u2);  
 	}  
 	 
-	/*
-	public User getUserById(int id){  
-	    //User u=(User)template.get(User.class,id);  
-	    //return u;  
-	} 
-	*/ 
 	
 	public List<User> getUsers(){  
 	    List<User> list=new ArrayList<User>();  

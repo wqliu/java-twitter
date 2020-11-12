@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.twitter.models.User;
+import java.util.List;
 //import com.example.twitter.jpa.UserRepository; 
 //import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -32,7 +33,7 @@ public class UserController {
 		return true;
 	}
 	
-    /*
+    
 	@GetMapping(path="/getUserById/{id}")
 	public @ResponseBody User getUserById(@PathVariable(value="id") int id){
 		return userDao.getUserById(id);
@@ -43,8 +44,8 @@ public class UserController {
 		userDao.updateUser(u);
 		return true;
 	}
-	*/
 	
+	@Transactional
 	@DeleteMapping(path="/deleteUser")
 	public @ResponseBody boolean deleteUserById(User u) {
 	    userDao.deleteUser(u);

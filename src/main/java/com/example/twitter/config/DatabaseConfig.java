@@ -55,6 +55,7 @@ public class DatabaseConfig {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
+        sessionFactoryBean.setMappingResources("user.hbm.xml");
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
         hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
