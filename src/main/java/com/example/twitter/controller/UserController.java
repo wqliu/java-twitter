@@ -39,15 +39,20 @@ public class UserController {
 		return userDao.getUserById(id);
 	}
 	
+	@GetMapping(path="/getAllUsers")
+	public @ResponseBody List<User> getAllUsers(){
+		return userDao.getAllUsers();
+	}
+	
 	@PostMapping(path="/updateUser")
-	public @ResponseBody boolean updateUserById(User u) {
+	public @ResponseBody boolean updateUserById(@RequestBody User u) {
 		userDao.updateUser(u);
 		return true;
 	}
 	
 	@Transactional
 	@DeleteMapping(path="/deleteUser")
-	public @ResponseBody boolean deleteUserById(User u) {
+	public @ResponseBody boolean deleteUserById(@RequestBody User u) {
 	    userDao.deleteUser(u);
 	    return true;
 	}

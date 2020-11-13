@@ -15,33 +15,32 @@ public class UserDao {
 	//public HibernateTemplate template;
 	@Autowired
     private SessionFactory _sessionFactory;
-	public void setTemplate(HibernateTemplate template) {  
-	    //.template = template;  
-	}
 	
 	private Session getSession() {
         return _sessionFactory.getCurrentSession();
     }
 	
 	public void saveUser(User u){  
-		//System.out.println(u.id);
-	    //template.persist(u);
 		getSession().save(u);
-	    //System.out.println("22222222");
 	}  
 	  
 	public User getUserById(int id) {
 		return getSession().get(User.class, id);
 	}
 	
-	public void updateUser(User u){  
-	    getSession().update(u);  
+	public List<User> getAllUsers(){
+		return getSession().createQuery("from User").list();
+	}
+	
+	public void updateUser(User u){
+		getSession().saveOrUpdate(u);
+	    //getSession().createQuery(String.format("update User set username = %s where id = %d", u.username, u.id)).executeUpdate();  
 	}  
 	  
 	public void deleteUser(User u){  
-		User u2 = getSession().get(User.class, u.id);
-		System.out.println(u2.username);
-	    getSession().delete(u2);  
+		//User u2 = getSession().get(User.class, u.id);
+		//System.out.println(u2.username);
+	    getSession().delete(u);  
 	}  
 	 
 	
