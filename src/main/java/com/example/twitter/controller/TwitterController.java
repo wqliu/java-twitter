@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.Map;
 
+import java.util.*;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 @Controller
 @RequestMapping(path="/java-twitter")
 public class TwitterController {
@@ -22,6 +26,11 @@ public class TwitterController {
 		System.out.println(twitter.user.username);
 	    twitterDao.saveTwitter(twitter);
 	    return true;
+	}
+	
+	@GetMapping(path="/getTwitter/{id}")
+	public @ResponseBody Twitter getTwitterById(@PathVariable(value= "id") long id) {
+		return twitterDao.getTwitterById(id);
 	}
 	/*
 	@PostMapping(path="/deleteTwitter/{id}")
@@ -48,6 +57,10 @@ public class TwitterController {
 	*/
 	
 	public static void main(String[] args) {
-		
+		List<Integer> l = new LinkedList<>();
+		l.add(0);
+		for(Integer i:l) {
+			System.out.println(i);
+		}
 	}
 }

@@ -16,7 +16,7 @@
           <generator class="increment"></generator>  
           </id>  
             
-          <many-to-one name="user" cascade="all"></many-to-one>      
+          <many-to-one name="user" cascade="all" lazy="false"></many-to-one>      
           <property name="text"></property>
           <property name="date"></property>
           <property name="likes"></property>
