@@ -11,5 +11,16 @@
             
           <property name="username"></property>    
 </class>  
+<class name="com.example.twitter.models.Twitter" table="Twitter">  
+          <id name="id">  
+          <generator class="increment"></generator>  
+          </id>  
+            
+          <many-to-one name="user" cascade="all"></many-to-one>      
+          <property name="text"></property>
+          <property name="date"></property>
+          <property name="likes"></property>
+</class> 
+
             
 </hibernate-mapping>  
