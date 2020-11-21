@@ -31,4 +31,19 @@ public class TwitterDao {
 	public Twitter getTwitterById(long id) {
 	    return getCurrentSession().get(Twitter.class, id);	
 	}
+	
+	public void update(Twitter t) {
+		getCurrentSession().update(t);
+	}
+	
+	public void delete(long id) {
+		getCurrentSession().delete(id);
+	}
+	
+	public void likeTwitter(long id) {
+        Session s = getCurrentSession();
+        Twitter t = s.load(Twitter.class, id);
+        t.setLikes(t.getLikes()+1);
+        s.save(t);
+	}
 }

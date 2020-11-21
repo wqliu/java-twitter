@@ -32,29 +32,24 @@ public class TwitterController {
 	public @ResponseBody Twitter getTwitterById(@PathVariable(value= "id") long id) {
 		return twitterDao.getTwitterById(id);
 	}
-	/*
+	
+	@PostMapping(path="/updateTwitter")
+	public @ResponseBody boolean updateTwitter(@RequestBody Twitter t) {
+		twitterDao.update(t);
+		return true;
+	}
+	
 	@PostMapping(path="/deleteTwitter/{id}")
-	public @ResponseBody Boolean deleteTwitter(@PathVariable(value = "id") int id) {
-		try {
-			jdbcTemplate.update("delete from twitter where id = ?",id);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+	public @ResponseBody Boolean deleteTwitter(@PathVariable(value = "id") long id) {
+		twitterDao.delete(id);
 		return true;
 	}
 	
 	@PostMapping(path="/likeTwitter/{id}")
-	public @ResponseBody Boolean likeTwitter(@PathVariable(value = "id") int id) {
-		try {
-			jdbcTemplate.update("update twitter set likes = likes+1 where id = ?",id);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+	public @ResponseBody Boolean likeTwitter(@PathVariable(value = "id") long id) {
+        twitterDao.likeTwitter(id);
 		return true;
 	}
-	*/
 	
 	public static void main(String[] args) {
 		List<Integer> l = new LinkedList<>();
